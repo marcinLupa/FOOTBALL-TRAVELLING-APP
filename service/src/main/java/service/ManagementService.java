@@ -86,14 +86,20 @@ public class ManagementService {
             String email = DataFromUserService.getEmail();
 
             EmailService emailService = new EmailService();
-
+            System.out.println(toJson(searchDto.getActualWeather()));
             try {
                 emailService.sendAsHtml(email
                         , "APLIKACJA DLA FANOW FOOTBALLU I PODROZNIKOW!!!  ",
 
                         "<head>  " +
                                 "<body>" + "<h1>" + "TWOJA PODROZ:" + "," + "</h1>" +
-
+                                "TWOJ WYBRANY MECZ NA KTORY CHCESZ LECIEC TO: " + "<p>" +
+                                searchDto.getChosenMatch() + "</p>" +
+                                "<p>" + "POLECISZ SAMOLOTEM: " + "</p>" +
+                                "<p>"+ searchDto.getChosenFlight() + " " +
+                                searchDto.getComebackFlight() + "</p>" +
+                                "<p>" +"AKTUALNA POGODA W " + searchDto.getChosenFlight().getArrivalCity().getCityName().toUpperCase() + "</p>" +
+                                "<p>" +searchDto.getActualWeather() + "</p>" +
                                 "</body>" +
                                 "</html>");
             } catch (MessagingException e) {
