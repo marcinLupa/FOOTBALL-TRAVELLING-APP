@@ -1,9 +1,6 @@
 package dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -32,6 +29,7 @@ public class GameDto {
     private LeagueDto league;
 
     @OneToMany(mappedBy = "chosenMatch")
+    @EqualsAndHashCode.Exclude
     private Set<SearchDto> searchDtos;
 
     @Override

@@ -8,7 +8,10 @@ import dto.WindDto;
 import exceptions.MyException;
 import impl.ActualWatherRepositoryImpl;
 import service.MenuService;
+import service.utils.DataFromUserService;
+import service.utils.EmailService;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
@@ -17,11 +20,12 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("JEST");
         try {
-            EntityManager entityManager = DbConnection.getInstance().getEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
+//            EntityManager entityManager = DbConnection.getInstance().getEntityManager();
+//            EntityTransaction entityTransaction = entityManager.getTransaction();
+//
+//            entityTransaction.begin();
 
-            entityTransaction.begin();
-          new MenuService().manage();
+       new MenuService().manage();
 
 //               ActualWeatherDto aw = ActualWeatherDto
 //                            .builder()
@@ -47,8 +51,8 @@ public class Main {
 //        new ActualWatherRepositoryImpl().addOrUpdate(aw);
           //1
             //entityManager.persist(aw);
-            entityTransaction.commit();
-            DbConnection.getInstance().close();
+//            entityTransaction.commit();
+//            DbConnection.getInstance().close();
         } catch (MyException e) {
             System.err.println(e.getExceptionInfo().getMessage());
             e.printStackTrace();

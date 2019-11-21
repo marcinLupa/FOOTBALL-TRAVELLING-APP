@@ -1,10 +1,7 @@
 package dto;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import model.football.Country;
 
 import javax.persistence.*;
@@ -33,6 +30,7 @@ public class LeagueDto {
     private CountryDto country;
 
     @OneToMany(mappedBy = "league")
+    @EqualsAndHashCode.Exclude
     private Set<GameDto> gameDtos;
 
     @Override

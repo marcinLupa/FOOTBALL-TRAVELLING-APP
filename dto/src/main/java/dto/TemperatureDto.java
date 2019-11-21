@@ -1,9 +1,6 @@
 package dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -25,5 +22,6 @@ public class TemperatureDto {
     private Double pressure;
 
     @OneToMany(mappedBy = "tempreture")
+    @EqualsAndHashCode.Exclude
     private Set<ActualWeatherDto> actualWeathers;
 }

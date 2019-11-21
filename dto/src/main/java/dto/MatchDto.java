@@ -1,9 +1,6 @@
 package dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,6 +28,7 @@ public class MatchDto {
     private TeamDto awayTeam;
 
     @OneToMany(mappedBy = "match")
+    @EqualsAndHashCode.Exclude
     private Set<GameDto> gameDtoSet;
 
 
