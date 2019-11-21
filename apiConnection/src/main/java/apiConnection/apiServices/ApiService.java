@@ -3,6 +3,7 @@ package apiConnection.apiServices;
 import exceptions.MyException;
 import json.generic.GenericConverter;
 
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.ProxySelector;
@@ -12,10 +13,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
@@ -23,7 +20,7 @@ public abstract class ApiService<T> {
 
     private final Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
-    static HttpRequest requestGet(final String path, String[] headersHost, String[] headersKey) throws URISyntaxException {
+    private static HttpRequest requestGet(final String path, String[] headersHost, String[] headersKey) throws URISyntaxException {
 
         return HttpRequest.newBuilder()
                 .uri(new URI(path))
@@ -46,21 +43,13 @@ public abstract class ApiService<T> {
                 throw new MyException("API GENERIC CONVERTER EXCEPTION - API SERVICE");
             }
 
-            CountDownLatch countDownLatch = new CountDownLatch(1);
-            CompletableFuture<HttpResponse<String>> response1 = HttpClient
+           HttpResponse<String> response1 = HttpClient
                     .newBuilder()
                     .proxy(ProxySelector.getDefault())
                     .build()
-                    .sendAsync(requestGet(apiUrl, headersHost, headersKey), HttpResponse.BodyHandlers.ofString());
-            response1.thenAccept(res -> {
+                    .send(requestGet(apiUrl, headersHost, headersKey), HttpResponse.BodyHandlers.ofString());
 
-             //   System.out.println("RES BODY" + res.body());
-                reference.set(res.body());
-                countDownLatch.countDown();
-            });
-        //    System.out.println("AWAIT");
-            countDownLatch.await(10, TimeUnit.SECONDS);
-            countDownLatch.countDown();
+                reference.set(response1.body());
 
             if (reference.get() == null) {
                 throw new MyException("VALUE FROM API IS NULL - EXCEPTION API SERVICE");
@@ -77,8 +66,8 @@ public abstract class ApiService<T> {
                 throw new MyException("NIE ZNALEZIONO MIASTA");
             }
 
-        } catch (InterruptedException |
-                URISyntaxException e) {
+        } catch (IOException |
+                URISyntaxException | InterruptedException e) {
             throw new MyException("API SERVICE EXCEPTION");
         }
         return api.fromJson(reference.get(), type)
