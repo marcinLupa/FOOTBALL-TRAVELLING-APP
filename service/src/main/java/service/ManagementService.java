@@ -7,7 +7,6 @@ import dto.FlightDto;
 import dto.SearchDto;
 import exceptions.MyException;
 import impl.*;
-import json.impl.SearchFileJsonConverterImpl;
 import model.skyScanner.CityFromApi;
 import model.weather.ListOfWeatherFromApi;
 import service.utils.DataFromUserService;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ManagementService {
+ class ManagementService {
 
 
     private SkyScannerApiManagmentService skyScannerApiManagmentService;
@@ -28,7 +27,7 @@ public class ManagementService {
     private WeatherApiManagmentService weatherApiManagmentService;
     private StatisticsService statisticsService;
 
-    public ManagementService() {
+     ManagementService() {
         this.skyScannerApiManagmentService = new SkyScannerApiManagmentService();
         this.footballApiManagmentService = new FootballApiManagmentService();
         this.weatherApiManagmentService = new WeatherApiManagmentService();
@@ -46,7 +45,7 @@ public class ManagementService {
 
     }
 
-    public Map<FlightDto, FlightDto> flightManager() {
+     Map<FlightDto, FlightDto> flightManager() {
 
         Map<FlightDto, FlightDto> flights = new HashMap<>();
         try {
@@ -66,9 +65,9 @@ public class ManagementService {
 
     }
 
-    public SearchDto matchManager() {
+     SearchDto matchManager() {
 
-        SearchDto searchDto = null;
+        SearchDto searchDto;
         try {
             searchDto = footballApiManagmentService.searchingMatch();
         } catch (ParseException e) {
@@ -110,8 +109,8 @@ public class ManagementService {
         return searchDto;
     }
 
-    public ActualWeatherDto weatherCheck() {
-        ActualWeatherDto actualWeather = null;
+     ActualWeatherDto weatherCheck() {
+        ActualWeatherDto actualWeather;
         System.out.println("PODAJ MIASTO DLA KTÓREGO CHCESZ SPRAWDZIC AKTUALNA POGODE");
 
         CityFromApi city = CityFromApi.builder()
@@ -133,7 +132,7 @@ public class ManagementService {
         return actualWeather;
     }
 
-    public void statistics() {
+     void statistics() {
         System.out.println("STATYSTKI");
         statisticsService.mostPopularArrivalCity();
     }

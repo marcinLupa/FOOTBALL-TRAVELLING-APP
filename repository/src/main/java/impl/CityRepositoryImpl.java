@@ -1,6 +1,4 @@
 package impl;
-
-import dto.AirlineDto;
 import dto.CityDto;
 import exceptions.MyException;
 import generic.AbstractGenericRepository;
@@ -23,13 +21,15 @@ public class CityRepositoryImpl extends AbstractGenericRepository<CityDto> imple
                     .createQuery("select c from CityDto c where c.cityName=:name", CityDto.class)
                     .setParameter("name", cityName)
                     .getResultList();
+
             if (!cityDtos.isEmpty()) {
                 op = Optional.of(cityDtos.get(0));
             }
-
+cityDtos.forEach(System.out::println);
             entityTransaction.commit();
             return op;
         } catch (Exception e) {
+            e.printStackTrace();
             if (entityTransaction != null) {
                 entityTransaction.rollback();
             }

@@ -1,6 +1,5 @@
 package dto;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 import javax.persistence.*;

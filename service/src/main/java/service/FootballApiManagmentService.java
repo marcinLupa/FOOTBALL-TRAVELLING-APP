@@ -1,6 +1,5 @@
 package service;
 
-import apiConnection.apiServices.ApiServiceMatchdayImpl;
 import dto.*;
 import exceptions.MyException;
 import impl.*;
@@ -13,6 +12,7 @@ import model.football.Competition;
 import model.football.Matchday;
 import model.skyScanner.CityFromApi;
 import model.skyScanner.FlightFromApi;
+import service.api.apiServices.ApiServiceMatchdayImpl;
 import service.utils.DataFromUserService;
 
 import java.net.URISyntaxException;

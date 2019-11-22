@@ -7,8 +7,9 @@ import impl.*;
 import json.impl.WeatherSearchApiJsonConverter;
 import model.skyScanner.CityFromApi;
 import model.weather.*;
-import apiConnection.apiServices.ApiService;
-import apiConnection.apiServices.ApiServiceWeatherSearch;
+
+import service.api.apiServices.ApiService;
+import service.api.apiServices.ApiServiceWeatherSearch;
 
 import java.net.URISyntaxException;
 import java.text.MessageFormat;

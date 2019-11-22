@@ -13,9 +13,10 @@ import lombok.Data;
 import model.skyScanner.CityFromApi;
 import model.skyScanner.CityListFromApi;
 import model.skyScanner.FlightFromApi;
-import apiConnection.apiServices.ApiServiceFlightImpl;
-import apiConnection.apiServices.ApiServicePlaceSearchImpl;
+
 import model.skyScanner.PlaceFromApi;
+import service.api.apiServices.ApiServiceFlightImpl;
+import service.api.apiServices.ApiServicePlaceSearchImpl;
 import service.utils.DataFromUserService;
 
 import java.math.BigDecimal;
