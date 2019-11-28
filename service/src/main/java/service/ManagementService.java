@@ -1,7 +1,5 @@
 package service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import dto.ActualWeatherDto;
 import dto.FlightDto;
 import dto.SearchDto;
@@ -85,7 +83,6 @@ import java.util.Map;
             String email = DataFromUserService.getEmail();
 
             EmailService emailService = new EmailService();
-            System.out.println(toJson(searchDto.getActualWeather()));
             try {
                 emailService.sendAsHtml(email
                         , "APLIKACJA DLA FANOW FOOTBALLU I PODROZNIKOW!!!  ",
@@ -133,17 +130,9 @@ import java.util.Map;
     }
 
      void statistics() {
-        System.out.println("STATYSTKI");
-        statisticsService.mostPopularArrivalCity();
-    }
-    public static <T> String toJson(T t) {
-        try {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            return gson.toJson(t);
 
-        } catch (Exception e) {
-            throw new MyException( "to json exception");
-        }
+
     }
+
 
 }
