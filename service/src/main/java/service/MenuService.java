@@ -3,6 +3,7 @@ package service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import connection.DbConnection;
 import exceptions.MyException;
 import service.utils.DataFromUserService;
 
@@ -34,6 +35,7 @@ public class MenuService {
                     case 3 -> managementService.weatherCheck();
                     case 4 -> managementService.statistics();
                     case 5 -> {
+                        DbConnection.getInstance().close();
                         return;
                     }
                 }

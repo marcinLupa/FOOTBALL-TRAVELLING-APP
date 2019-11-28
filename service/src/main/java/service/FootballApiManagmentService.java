@@ -18,8 +18,8 @@ import service.utils.DataFromUserService;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -64,10 +64,10 @@ class FootballApiManagmentService {
 
 
     SearchDto searchingMatch() throws ParseException {
-        GameDto chosenMatch = null;
-        FlightDto choosenFlight = null;
-        FlightDto comeback = null;
-        ActualWeatherDto actualWeather = null;
+        GameDto chosenMatch;
+        FlightDto choosenFlight;
+        FlightDto comeback;
+        ActualWeatherDto actualWeather;
         try {
 
 
@@ -84,12 +84,8 @@ class FootballApiManagmentService {
             System.out.println("DLA KTOREJ KOLEJKI LIGOWEJ CHCESZ SPRAWDZIC POLACZENIA?");
 
             int matchdayInt = DataFromUserService.getInt();
-            MatchdayDto matchdayDto = null;
-                matchdayDto = ModelMapper.fromMatchdayToMatchdayDto(apiMatchSearch(ModelMapper.fromLeagueDtoToCompetition(leagueDtos.get(leagueFromUser)), matchdayInt));
-
-
-            System.out.println("---");
-            matchdayDto.getMatches().forEach(System.out::println);
+            MatchdayDto matchdayDto;
+            matchdayDto = ModelMapper.fromMatchdayToMatchdayDto(apiMatchSearch(ModelMapper.fromLeagueDtoToCompetition(leagueDtos.get(leagueFromUser)), matchdayInt));
 
             new MatchdayDtoValidator().validate(matchdayDto);
 
@@ -110,7 +106,6 @@ class FootballApiManagmentService {
                     .builder()
                     .airportName(DataFromUserService.getCityNameToSearch())
                     .build());
-
 
             GameDto finalChosenMatch = chosenMatch;
             List<FlightDto> flightDtos = ModelMapper.joiningFlightDtosLists(
@@ -149,19 +144,14 @@ class FootballApiManagmentService {
                     return null;
 
             }
-            System.out.println("TWOJ WYBRANY LOT POWROTNY TO:");
+
             choosenFlight = flightDtos
                     .stream()
                     .filter(x -> x.getId().equals(numberOfFlight))
                     .findFirst()
                     .orElseThrow(() -> new MyException("WRONG NUMBER OF FLIGHT EXCEPTION - FOOTBALL SERVICE"));
 
-            System.out.println(choosenFlight);
             comeback = skyScannerApiManagmentService.comebackFlightSearch(choosenFlight);
-            if (comeback != null) {
-                System.out.println("TWOJ WYBRANY LOT TO:");
-                System.out.println(comeback);
-            }
 
             actualWeather = weatherApiManagmentService
                     .actualWeatherGenerator(weatherApiManagmentService
@@ -201,7 +191,6 @@ class FootballApiManagmentService {
                         SkyScannerApiManagmentService
                                 .urlCitySearch(
                                         cityDeparture.getAirportName())).get(0).getAirportSkyScannerId();
-        allCitesInSearch.forEach(System.out::println);
         try {
             allCitesInSearch.forEach(cityArrival -> {
                 flightFromApis.add(skyScannerApiManagmentService.apiFlightSearch(cityFromUser,
@@ -233,11 +222,6 @@ class FootballApiManagmentService {
                 , headersKeyFootballApi
                 , headersKeyFootballApi);
 
-//        System.out.println(apiServiceMatchday.getDataFromApi(
-//                urlMatchSearch(competition, matchdayInt)
-//                , new MatchdayApiJsonConverter()
-//                , headersKeyFootballApi
-//                , headersKeyFootballApi));
 
         Matchday matchdayToRange = matchday;
         LongStream.range(0, matchday.getMatches().size())
@@ -268,29 +252,4 @@ class FootballApiManagmentService {
                 .collect(toList());
     }
 
-    private static String cityFromTeamName(Matchday chosenMatch, List<FlightDto> finalFlightDtos) {
-        if (chosenMatch == null) {
-            throw new MyException("MATCHDAY IS NULL EXCEPTION- FOOTBALL SERVICE");
-        }
-        if (finalFlightDtos == null) {
-            throw new MyException("CURRENT FLIGHTS ARE NULL EXCEPTION- FOOTBALL SERVICE");
-        }
-
-        return chosenMatch
-                .getMatches()
-                .stream()
-                .map(hometeam ->
-                        Arrays.stream(hometeam.getHomeTeam()
-                                .getName()
-                                .split(" "))
-                                .filter(x -> finalFlightDtos
-                                        .stream()
-                                        .map(y -> y.getArrivalCity().getCityName())
-                                        .collect(Collectors.toList())
-                                        .contains(x))
-                                .findFirst()
-                                .orElse("THERE IS NO SUCH CITY EXCEPTION- FOOTBALL SERVICE"))
-                .findFirst()
-                .orElse(("THERE IS NO SUCH CITY EXCEPTION- FOOTBALL SERVICE"));
-    }
 }

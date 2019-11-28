@@ -41,5 +41,10 @@ public class CityDto {
     @ToString.Exclude
     private Set<FlightDto> flightDtosDeparture;
 
-
+    @Override
+    public String toString() {
+        return "\n" + " SKY SCANNER CITY ID: " + cityId +"\n"+
+                " CITY NAME: '" + cityName  +"\n"+
+                " AIRPORT NAME: " + airportName  +"\n";
+    }
 }

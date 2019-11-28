@@ -1,6 +1,5 @@
 package dto;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -25,4 +24,11 @@ public class AirlineDto {
     @OneToMany(mappedBy = "airline")
     @EqualsAndHashCode.Exclude
     private Set<FlightDto> flightDtos;
+
+    @Override
+    public String toString() {
+        return "\n" + " SKY SCANNER AIRLINE ID: " + getAirlineId() + "\n" +
+                " AIERLINE NAME: '" + getAirlineId() + "\n";
+    }
 }
+

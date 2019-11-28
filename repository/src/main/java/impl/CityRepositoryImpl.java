@@ -25,7 +25,6 @@ public class CityRepositoryImpl extends AbstractGenericRepository<CityDto> imple
             if (!cityDtos.isEmpty()) {
                 op = Optional.of(cityDtos.get(0));
             }
-cityDtos.forEach(System.out::println);
             entityTransaction.commit();
             return op;
         } catch (Exception e) {

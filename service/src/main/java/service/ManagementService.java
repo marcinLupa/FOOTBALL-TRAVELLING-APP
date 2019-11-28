@@ -130,7 +130,28 @@ import java.util.Map;
     }
 
      void statistics() {
+         while (true) {
 
+             System.out.println("MENU DANYCH STATYSTYCZNYCH: " + "\n");
+
+             System.out.println("WYBIERZ OPCJE: " + "\n" +
+                     "1 - GŁOWNY PROGRAM DO WYSZUKIWANIA MECZOW PLKRASKICH, POLACZEN LOTNICZYCH I AKTUALNEJ POGODY" + "\n" +
+                     "2 - WYSZUKIWARKA LOTOW" + "\n" +
+                     "3 - SPRAWDZ POGODE " + "\n" +
+                     "4 - STATYSTKI WYSZUKIWAN" + "\n" +
+                     "5 - WYJSCIE Z PROGRAMU");
+
+             int menuOption = DataFromUserService.getInt(6);
+             switch (menuOption) {
+                 case 1 -> managementService.matchManager();
+                 case 2 -> managementService.flightManager();
+                 case 3 -> managementService.weatherCheck();
+                 case 4 -> managementService.statistics();
+                 case 5 -> {
+                     return;
+                 }
+             }
+         }
 
     }
 
