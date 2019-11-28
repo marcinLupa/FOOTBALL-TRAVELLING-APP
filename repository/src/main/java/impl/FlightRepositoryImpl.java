@@ -5,14 +5,14 @@ import dto.CityDto;
 import dto.FlightDto;
 import exceptions.MyException;
 import generic.AbstractGenericRepository;
-import model.statistics.PopularityAndTicketPrice;
 import repositories.FlightRepository;
 
 import javax.persistence.EntityTransaction;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class FlightRepositoryImpl extends AbstractGenericRepository<FlightDto> implements FlightRepository {
 
@@ -96,7 +96,7 @@ public class FlightRepositoryImpl extends AbstractGenericRepository<FlightDto> i
 
     @Override
     public Optional<Double> avgArrivalTicketPriceToCity(CityDto cityDto) {
-        Optional<Double> op = Optional.empty();
+        Optional<Double> op;
         EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
             entityTransaction.begin();
@@ -118,7 +118,7 @@ public class FlightRepositoryImpl extends AbstractGenericRepository<FlightDto> i
 
     @Override
     public Optional<Double> avgDepartureTicketPriceToCity(CityDto cityDto) {
-        Optional<Double> op = Optional.empty();
+        Optional<Double> op ;
         EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
             entityTransaction.begin();

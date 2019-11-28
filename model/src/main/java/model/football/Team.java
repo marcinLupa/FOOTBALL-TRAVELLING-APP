@@ -5,10 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +13,5 @@ import javax.persistence.Id;
 
 public class Team {
 
-  //  private Long id;
     private String name;
 }

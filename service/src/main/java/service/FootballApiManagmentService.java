@@ -167,7 +167,6 @@ class FootballApiManagmentService {
                 .comebackFlight(comeback)
                 .chosenMatch(chosenMatch)
                 .build();
-        System.out.println(searchDto.getChosenMatch().getMatch().getAwayTeam());
 
         addingToDatebaseService.addSearchWithFlightsAndGame(searchDto);
 

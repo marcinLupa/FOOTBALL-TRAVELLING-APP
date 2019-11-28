@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.ManyToOne;
 
 import static javax.persistence.CascadeType.PERSIST;
 
@@ -16,11 +15,8 @@ import static javax.persistence.CascadeType.PERSIST;
 @Data
 @Builder
 
-//@Entity
 public class Competition {
-//    @Id
-//    @GeneratedValue
-//    private Long idFromDb;
+
     @SerializedName("id")
     private Long competitionId;
     private String code;

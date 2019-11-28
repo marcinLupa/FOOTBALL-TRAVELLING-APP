@@ -13,7 +13,6 @@ import java.util.List;
 
 public class FlightFromApi {
 
-//    private Long id;
     @SerializedName("Places")
     private List<PlaceFromApi> placeFromApis = new ArrayList<>();
     @SerializedName("Quotes")

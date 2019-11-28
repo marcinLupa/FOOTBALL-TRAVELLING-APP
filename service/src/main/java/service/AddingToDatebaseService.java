@@ -72,9 +72,7 @@ public class AddingToDatebaseService {
                                 .build())
                         .orElseThrow(() -> new MyException("ADD AIRLINE EXCEPTION")));
 
-        //   AirlineDto airlineDto=flightDto.getAirline();
-//        CityDto cityDto1=flightDto.getArrivalCity();
-//        CityDto cityDto2=flightDto.getDepartureCity();
+
 
         flightDto.setAirline(airlineDto);
         flightDto.setArrivalCity(arrivalCity);

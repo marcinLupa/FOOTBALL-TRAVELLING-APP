@@ -1,25 +1,21 @@
 package model.skyScanner;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import model.weather.ActualWeather;
 
-import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 
-//@Entity
 public class CityFromApi {
 
-
-//    @Id
-//    @GeneratedValue
- //   private Long idFromDb;
 
     private Long id;
     @SerializedName("PlaceId")
@@ -33,9 +29,6 @@ public class CityFromApi {
     @SerializedName(value = "PlaceName", alternate = "name")
     private String nameOfCity;
 
-//    @OneToMany(mappedBy = "city")
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
     private List<ActualWeather> actualWeathers;
 
     public void addActualWeather(ActualWeather... aw) {

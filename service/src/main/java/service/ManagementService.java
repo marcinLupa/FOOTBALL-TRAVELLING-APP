@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
- public class ManagementService {
+public class ManagementService {
 
 
     private SkyScannerApiManagmentService skyScannerApiManagmentService;
@@ -25,25 +25,18 @@ import java.util.Map;
     private WeatherApiManagmentService weatherApiManagmentService;
     private StatisticsService statisticsService;
 
-     ManagementService() {
+    ManagementService() {
         this.skyScannerApiManagmentService = new SkyScannerApiManagmentService();
         this.footballApiManagmentService = new FootballApiManagmentService();
         this.weatherApiManagmentService = new WeatherApiManagmentService();
         this.statisticsService = new StatisticsService(
 
                 new FlightRepositoryImpl(),
-                new AirlineRepositoryImpl(),
-                new CityRepositoryImpl(),
-                new GameRepositoryImpl(),
-                new MatchRepositoryImpl(),
-                new LeagueRepositoryImpl(),
-                new SearchRepositoryImpl(),
-                new TeamRepositoryImpl(),
                 new ActualWatherRepositoryImpl());
 
     }
 
-     Map<FlightDto, FlightDto> flightManager() {
+    Map<FlightDto, FlightDto> flightManager() {
 
         Map<FlightDto, FlightDto> flights = new HashMap<>();
         try {
@@ -63,7 +56,7 @@ import java.util.Map;
 
     }
 
-     public SearchDto matchManager() {
+    public SearchDto matchManager() {
 
         SearchDto searchDto;
         try {
@@ -92,21 +85,21 @@ import java.util.Map;
                                 "TWOJ WYBRANY MECZ NA KTORY CHCESZ LECIEC TO: " + "<p>" +
                                 searchDto.getChosenMatch() + "</p>" +
                                 "<p>" + "POLECISZ SAMOLOTEM: " + "</p>" +
-                                "<p>"+ searchDto.getChosenFlight() + " " +
+                                "<p>" + searchDto.getChosenFlight() + " " +
                                 searchDto.getComebackFlight() + "</p>" +
-                                "<p>" +"AKTUALNA POGODA W " + searchDto.getChosenFlight().getArrivalCity().getCityName().toUpperCase() + "</p>" +
-                                "<p>" +searchDto.getActualWeather() + "</p>" +
+                                "<p>" + "AKTUALNA POGODA W " + searchDto.getChosenFlight().getArrivalCity().getCityName().toUpperCase() + "</p>" +
+                                "<p>" + searchDto.getActualWeather() + "</p>" +
                                 "</body>" +
                                 "</html>");
             } catch (MessagingException e) {
-                throw new MyException( "E-MAIL SEND AS HTML EXCEPTION" + e.getMessage());
+                throw new MyException("E-MAIL SEND AS HTML EXCEPTION" + e.getMessage());
             }
         }
 
         return searchDto;
     }
 
-     ActualWeatherDto weatherCheck() {
+    ActualWeatherDto weatherCheck() {
         ActualWeatherDto actualWeather;
         System.out.println("PODAJ MIASTO DLA KTÓREGO CHCESZ SPRAWDZIC AKTUALNA POGODE");
 
@@ -129,29 +122,52 @@ import java.util.Map;
         return actualWeather;
     }
 
-     void statistics() {
-         while (true) {
+    void statistics() {
+        while (true) {
 
-             System.out.println("MENU DANYCH STATYSTYCZNYCH: " + "\n");
+            System.out.println("MENU DANYCH STATYSTYCZNYCH: " + "\n");
 
-             System.out.println("WYBIERZ OPCJE: " + "\n" +
-                     "1 - GŁOWNY PROGRAM DO WYSZUKIWANIA MECZOW PLKRASKICH, POLACZEN LOTNICZYCH I AKTUALNEJ POGODY" + "\n" +
-                     "2 - WYSZUKIWARKA LOTOW" + "\n" +
-                     "3 - SPRAWDZ POGODE " + "\n" +
-                     "4 - STATYSTKI WYSZUKIWAN" + "\n" +
-                     "5 - WYJSCIE Z PROGRAMU");
+            System.out.println("WYBIERZ OPCJE: " + "\n" +
+                    "1 - NAJCZESCIE ODWIEDZANE MIASTO" + "\n" +
+                    "2 - MIASTO Z KTOREGO NAJCZESCIEJ WRACALISMY" + "\n" +
+                    "3 - SREDNIEA CENA BILETU DO MIAST DO KTORYCH LATALISMY " + "\n" +
+                    "4 - SREDNIEA CENA BILETU Z MIAST Z KTORYCH LATALWRACALISMYISMY" + "\n" +
+                    "5 - NAJPOPULARNIEJSZA LINIA LOTNICZA" + "\n" +
+                    "6 - W JAKIM DNIU NAJCZESCIE LATALISMY?" + "\n" +
+                    "7 - WYJSCIE Z PROGRAMU");
 
-             int menuOption = DataFromUserService.getInt(6);
-             switch (menuOption) {
-                 case 1 -> managementService.matchManager();
-                 case 2 -> managementService.flightManager();
-                 case 3 -> managementService.weatherCheck();
-                 case 4 -> managementService.statistics();
-                 case 5 -> {
-                     return;
-                 }
-             }
-         }
+            int menuOption = DataFromUserService.getInt(7);
+            switch (menuOption) {
+                case 1 -> {
+                    System.out.println("MIASTO DO KTOREGO NAJCZESCIEJ LATALISMY TO");
+                    System.out.println(statisticsService.mostPopularArrivalCity());
+                }
+                case 2 -> {
+                    System.out.println("MIASTO Z KTOREGO NAJCZESCIEJ WRACALISMY TO");
+                    System.out.println(statisticsService.departureCityMostPopular());
+                }
+
+                case 3 -> {
+                    System.out.println("SREDNIEA CENA BILETU DO MIAST DO KTORYCH LATALISMY TO");
+                    System.out.println(String.format("%2.2f", statisticsService.avgArrivalTicketPrice())+" PLN");
+                }
+                case 4 -> {
+                    System.out.println("SREDNIEA CENA BILETU Z MIAST Z KTORYCH WRACALISMY TO");
+                    System.out.println(String.format("%2.2f", statisticsService.avgDepartureTicketPrice())+" PLN");
+                }
+                case 5 -> {
+                    System.out.println("NAJPOPOLARNIEJSZA LINIA LOTNICZA TO:");
+                    System.out.println(statisticsService.mostPopularAirline());
+                }
+                case 6 -> {
+                    System.out.println("NAJCZESCIEJ LATALISMY W DNIU:");
+                    System.out.println(statisticsService.mostPopularDateOfFlights());
+                }
+                case 7 -> {
+                    return;
+                }
+            }
+        }
 
     }
 

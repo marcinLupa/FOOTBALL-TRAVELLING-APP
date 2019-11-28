@@ -1,7 +1,5 @@
 package service;
 
-import dto.AirlineDto;
-import dto.CityDto;
 import dto.FlightDto;
 import exceptions.MyException;
 import impl.*;
@@ -13,8 +11,6 @@ import lombok.Data;
 import model.skyScanner.CityFromApi;
 import model.skyScanner.CityListFromApi;
 import model.skyScanner.FlightFromApi;
-
-import model.skyScanner.PlaceFromApi;
 import service.api.apiServices.ApiServiceFlightImpl;
 import service.api.apiServices.ApiServicePlaceSearchImpl;
 import service.utils.DataFromUserService;
@@ -24,10 +20,7 @@ import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -39,7 +32,6 @@ import static java.util.stream.Collectors.toList;
 
 public class SkyScannerApiManagmentService {
 
-    // private final static String urlPlane = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/PL/PLN/pl-PL/{0}/{1}/{2}";
     private final static String urlPlane = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/PL/PLN/pl_PL/{0}/{1}/{2}";//
     private final static String urlCity = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/PL/PLN/pl_PL/?query={0}";
     private final static String urlCityEnglish = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/PLN/en_GB/?query={0}";
@@ -135,12 +127,7 @@ public class SkyScannerApiManagmentService {
         addingToDatebaseService.addFlightWithCitiesAndAirline(flightDto);
 
         return flightDto;
-//        System.out.println("TWOJ WYBRANY LOT TO: ");
-//        System.out.println(choosenFlight);
-//
-//        CurrentFlight comeback = comebackFlightSearch(choosenFlight);
-//        System.out.println("TWOJ WYBRANY LOT TO:");
-//        System.out.println(comeback);
+
 
     }
 
@@ -172,7 +159,6 @@ public class SkyScannerApiManagmentService {
                 if (DataFromUserService.getYesOrNo()) {
                     comebackFlights = filtratingManager(comebackFlights);
                 }
-                comebackFlights.forEach(System.out::println);
                 System.out.println("CZY WYBIERASZ KTORES Z POWYZSZYCH POLACZEN?");
                 if (DataFromUserService.getYesOrNo()) {
                     System.out.println("PODAJ NUMER WYBRANEGO LOTU: ");
@@ -191,7 +177,6 @@ public class SkyScannerApiManagmentService {
         } else {
             return null;
         }
-        System.out.println("TWOJ WYBRANY LOT POWROTNY TO: ");
         return comeBackFlightDto;
     }
 
@@ -214,14 +199,6 @@ public class SkyScannerApiManagmentService {
         );
 
 
-//        if (cityListFromApi == null) {
-//            throw new MyException("CITIES ARE NULL EXCEPTION - SKY SCANNER SERVICE");
-//
-//        }
-//        if (cityListFromApi.getCities().isEmpty()) {
-//            throw new MyException("THERE IS NO AIRPORT IN THIS CITY OR THERE IS NO SUCH CITY: " + place + " EXCEPTION - SKY SCANNER SERVICE");
-//        }
-
         return cityListFromApi.getCities();
 
     }
@@ -229,11 +206,6 @@ public class SkyScannerApiManagmentService {
     List<FlightFromApi> listOfFlightGenerator(String cityDeparture, String cityArrival, LocalDate dateOfFlight) {
 
         List<FlightFromApi> flightFromApis = new ArrayList<>();
-
-//        Set<CityFromApi> placeFromApis = new HashSet<>(apiPlaceSearch(SkyScannerApiManagmentService
-//                .urlCitySearch(cityArrival)));
-//
-//        placeFromApis.forEach(x -> System.out.println(x.getAirportSkyScannerId()));
 
         List<String> listOfArrivalCities = apiPlaceSearch(SkyScannerApiManagmentService
                 .urlCitySearch(cityArrival))
@@ -270,9 +242,6 @@ public class SkyScannerApiManagmentService {
             }
         }
 
-//        flightFromApis.add(apiFlightSearch(cityFromUser,
-//                listOfArrivalCities.get(0),
-//                dateOfFlight.toString()));
         return flightFromApis;
 
     }
