@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
- class ManagementService {
+ public class ManagementService {
 
 
     private SkyScannerApiManagmentService skyScannerApiManagmentService;
@@ -65,7 +65,7 @@ import java.util.Map;
 
     }
 
-     SearchDto matchManager() {
+     public SearchDto matchManager() {
 
         SearchDto searchDto;
         try {
@@ -136,7 +136,7 @@ import java.util.Map;
         System.out.println("STATYSTKI");
         statisticsService.mostPopularArrivalCity();
     }
-    static <T> String toJson(T t) {
+    public static <T> String toJson(T t) {
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             return gson.toJson(t);
